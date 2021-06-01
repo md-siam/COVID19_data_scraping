@@ -1,0 +1,29 @@
+{
+  "name": "covid19_data_scraping",
+  "version": "1.0.0",
+  "description": "This will scrap covid19 data from https://www.worldometers.info/coronavirus/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/md-siam/COVID19_data_scraping.git"
+  },
+  "keywords": [
+    "covid19",
+    "web",
+    "scraping"
+  ],
+  "author": "md-siam",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/md-siam/COVID19_data_scraping/issues"
+  },
+  "homepage": "https://github.com/md-siam/COVID19_data_scraping#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.9",
+    "node-cron": "^3.0.0",
+    "request": "^2.88.2"
+  }
+}
