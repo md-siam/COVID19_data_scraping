@@ -13,7 +13,7 @@ async function main() {
     (error, response, html) => {
       if (!error && response.statusCode == 200) {
         const $ = cheerio.load(html);
-        const siteHeading = $("body>div>div>section>div>div>div>span");
+        const siteHeading = $("html>body>div>div>section>div>div>div>span");
         const splitHeading = siteHeading.text().split(" ");
         //console.log(splitHeading);
 

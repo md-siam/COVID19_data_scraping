@@ -1,11 +1,5 @@
 const request = require("request");
 const cheerio = require("cheerio");
-const cron = require("node-cron");
-
-//? Schedule tasks to be run on the server
-// cron.schedule("* * * * *", function () {
-//   console.log("running a task every minute");
-// });
 
 async function main() {
   await request(
@@ -13,23 +7,71 @@ async function main() {
     (error, response, html) => {
       if (!error && response.statusCode == 200) {
         const $ = cheerio.load(html);
-        const siteHeading = $("body>div>div>section>div>div>div>span");
-        const splitHeading = siteHeading.text().split(" ");
-        //console.log(splitHeading);
+        const _scrapLabtest = $(
+          "html>body>div.wrapper>div>section>div:nth-child(3)>div.col-md-2.col-print-12>div>div.box-body"
+        )
+          .children("div")
+          .text()
+          .replace(/\n+/g, "")
+          .trim()
+          .split(" ");
+        const scrapLabtest = parseInt(_scrapLabtest[0], 10);
 
-        const headTitlecheck = splitHeading[0] + " " + splitHeading[1];
-        //console.log(headTitlecheck);
+        const _scrapConfirmed = $(
+          "html>body>div.wrapper>div>section>div:nth-child(3)>div.col-md-2.col-print-12>div>div.box-body"
+        )
+          .children("div")
+          .next()
+          .text()
+          .replace(/\n+/g, "")
+          .trim()
+          .split(" ");
+        const scrapConfirmed = parseInt(_scrapConfirmed[0], 10);
 
-        if (headTitlecheck == "Last updated:") {
-          //Concatenate date & time
-          const scrapeDate =
-            splitHeading[2] + " " + splitHeading[3] + " " + splitHeading[4];
-          const scrapeTime = splitHeading[5] + " " + splitHeading[6];
-          console.log("\nScrape date: " + scrapeDate);
-          console.log("Scrape time: " + scrapeTime + "\n");
-        } else {
-          console.log('There is a change in the "Last updated:" section\n');
-        }
+        const _scrapIsolation = $(
+          "html>body>div.wrapper> div>section>div:nth-child(3)>div.col-md-2.col-print-12>div>div.box-body"
+        )
+          .children("div")
+          .next()
+          .next()
+          .text()
+          .replace(/\n+/g, "")
+          .trim()
+          .split(" ");
+        const scrapIsolation = parseInt(_scrapIsolation[0], 10);
+
+        const _scrapRecovered = $(
+          "html>body>div.wrapper>div>section>div:nth-child(3)>div.col-md-2.col-print-12>div>div.box-body"
+        )
+          .children("div")
+          .next()
+          .next()
+          .next()
+          .text()
+          .replace(/\n+/g, "")
+          .trim()
+          .split(" ");
+        const scrapRecovered = parseInt(_scrapRecovered[0], 10);
+
+        const _scrapDeath = $(
+          "html>body>div.wrapper>div>section>div:nth-child(3)>div.col-md-2.col-print-12>div>div.box-body"
+        )
+          .children("div")
+          .next()
+          .next()
+          .next()
+          .next()
+          .text()
+          .replace(/\n+/g, "")
+          .trim()
+          .split(" ");
+        const scrapDeath = parseInt(_scrapDeath[0], 10);
+
+        console.log("Lab Test: " + scrapLabtest);
+        console.log("Confirmed: " + scrapConfirmed);
+        console.log("Isolation: " + scrapIsolation);
+        console.log("Recovered: " + scrapRecovered);
+        console.log("Death: " + scrapDeath);
       }
     }
   );
