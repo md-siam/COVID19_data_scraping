@@ -69,7 +69,7 @@ async function main() {
             console.log("Confirmed: " + scrapConfirmed);
             console.log("Isolation: " + scrapIsolation);
             console.log("Recovere: " + scrapRecovered);
-            console.log("Death: " + scrapDeath);
+            console.log("Death: " + scrapDeath + "\n");
           });
         } else
           console.log('There is a change in the "Last updated:" section\n');
