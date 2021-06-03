@@ -72,7 +72,9 @@ async function main() {
             console.log("Death: " + scrapDeath + "\n");
           });
         } else
-          console.log('There is a change in the "Last updated:" section\n');
+          console.log(
+            "There was an error while web scraping COVID19 Data. Please check your JavaScript running @ RPi4\n"
+          );
       }
     }
   );
