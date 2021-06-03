@@ -18,7 +18,7 @@ async function main() {
         const splitHeading = siteHeading.text().split(" ");
         //console.log(splitHeading);
 
-        const headTitlecheck = splitHeading[0] + " " + splitHeading[1] + "e";
+        const headTitlecheck = splitHeading[0] + " " + splitHeading[1];
         //console.log(headTitlecheck);
 
         if (headTitlecheck == "Last updated:") {
