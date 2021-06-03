@@ -78,6 +78,8 @@ async function main() {
           // );
           emailTrigger(true);
         }
+      } else {
+        console.log(error);
       }
     }
   );
