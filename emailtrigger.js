@@ -28,5 +28,5 @@ function email() {
 }
 
 module.exports.trigger = function () {
-  if ((bool = true)) email();
+  if (true) email();
 };
