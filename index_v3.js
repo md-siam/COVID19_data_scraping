@@ -1,3 +1,4 @@
+const { trigger } = require("./emailtrigger.js");
 const request = require("request");
 const cheerio = require("cheerio");
 const cron = require("node-cron");
@@ -17,7 +18,7 @@ async function main() {
         const splitHeading = siteHeading.text().split(" ");
         //console.log(splitHeading);
 
-        const headTitlecheck = splitHeading[0] + " " + splitHeading[1];
+        const headTitlecheck = splitHeading[0] + " " + splitHeading[1] + "e";
         //console.log(headTitlecheck);
 
         if (headTitlecheck == "Last updated:") {
@@ -71,10 +72,12 @@ async function main() {
             console.log("Recovere: " + scrapRecovered);
             console.log("Death: " + scrapDeath + "\n");
           });
-        } else
-          console.log(
-            "There was an error while web scraping COVID19 Data. Please check your JavaScript running @ RPi4\n"
-          );
+        } else {
+          // console.log(
+          //   "There was an error while web scraping COVID19 Data. Please check your JavaScript running @ RPi4"
+          // );
+          trigger(true);
+        }
       }
     }
   );

@@ -1,3 +1,4 @@
+const { trigger } = require("./emailtrigger.js");
 const request = require("request");
 const cheerio = require("cheerio");
 const cron = require("node-cron");
@@ -28,9 +29,10 @@ async function main() {
           console.log("\nScrape date: " + scrapeDate);
           console.log("Scrape time: " + scrapeTime + "\n");
         } else {
-          console.log(
-            "There was an error while web scraping COVID19 Data. Please check your JavaScript running @ RPi4\n"
-          );
+          // console.log(
+          //   "There was an error while web scraping COVID19 Data. Please check your JavaScript running @ RPi4\n"
+          // );
+          trigger(true);
         }
       }
     }
