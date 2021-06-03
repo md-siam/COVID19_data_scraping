@@ -27,6 +27,6 @@ function email() {
   });
 }
 
-module.exports.trigger = function () {
+module.exports.emailTrigger = function () {
   if (true) email();
 };
