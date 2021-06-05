@@ -2,7 +2,7 @@
   "name": "covid19_data_scraping",
   "version": "1.0.0",
   "description": "This will scrap covid19 data from https://www.worldometers.info/coronavirus/",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
