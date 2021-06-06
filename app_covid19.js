@@ -141,8 +141,9 @@ async function main() {
 }
 
 //? Schedule tasks to be run on the server
-cron.schedule("*/2 * * *", function () {
-  console.log("Running this task every two hours");
+console.log("COVID19 data scraping has started...");
+cron.schedule("* * * *", function () {
+  console.log("Running this task every 1 hour");
   main();
 });
 
