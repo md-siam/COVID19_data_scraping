@@ -27,7 +27,7 @@ async function updateData(
 
   let result = await covid19Query.get(process.env.OBJECT_ID);
 
-  //update data
+  //!updating existing server data
   result.set("upDate", scrapeDate);
   result.set("upTime", scrapeTime);
   result.set("labTest", scrapLabtest);
@@ -35,8 +35,27 @@ async function updateData(
   result.set("isolation", scrapIsolation);
   result.set("recovere", scrapRecovered);
   result.set("death", scrapDeath);
-  result.save();
-  console.log("\nUpdate successful!!");
+  result
+    .save()
+    .then(function (covid19) {
+      console.log(
+        "COVID19 data updated! Date: " +
+          covid19.get("upDate") +
+          " Time: " +
+          covid19.get("upTime") +
+          "\nConfirmed: " +
+          covid19.get("confirmed") +
+          "\nDeath: " +
+          covid19.get("death") +
+          "\nRecovere: " +
+          covid19.get("recovere") +
+          "\n"
+      );
+    })
+    .catch(function (error) {
+      console.log("Error: " + error.message);
+      emailTrigger(true);
+    });
 }
 
 async function main() {
@@ -88,14 +107,14 @@ async function main() {
               .trim()
               .split(" ");
 
-            //!converting string to integer
+            //?converting string to integer
             const scrapLabtest = parseInt(_scrapLabtest[0], 10);
             const scrapConfirmed = parseInt(_scrapConfirmed[0], 10);
             const scrapIsolation = parseInt(_scrapIsolation[0], 10);
             const scrapRecovered = parseInt(_scrapRecovered[0], 10);
             const scrapDeath = parseInt(_scrapDeath[0], 10);
 
-            //*Parse Server works
+            //*calling function "updateData"
             updateData(
               scrapeDate,
               scrapeTime,
@@ -106,13 +125,13 @@ async function main() {
               scrapDeath
             );
 
-            console.log("\nScrape date: " + scrapeDate);
-            console.log("Scrape time: " + scrapeTime);
-            console.log("Lab Test: " + scrapLabtest);
-            console.log("Confirmed: " + scrapConfirmed);
-            console.log("Isolation: " + scrapIsolation);
-            console.log("Recovere: " + scrapRecovered);
-            console.log("Death: " + scrapDeath + "\n");
+            // console.log("\nScrape date: " + scrapeDate);
+            // console.log("Scrape time: " + scrapeTime);
+            // console.log("Lab Test: " + scrapLabtest);
+            // console.log("Confirmed: " + scrapConfirmed);
+            // console.log("Isolation: " + scrapIsolation);
+            // console.log("Recovere: " + scrapRecovered);
+            // console.log("Death: " + scrapDeath + "\n");
           });
         } else {
           // console.log(
