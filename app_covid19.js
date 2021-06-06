@@ -2,7 +2,6 @@ const { emailTrigger } = require("./emailtrigger.js");
 const Parse = require("parse/node");
 const request = require("request");
 const cheerio = require("cheerio");
-const cron = require("node-cron");
 
 Parse.initialize(process.env.APP_ID, process.env.JS_KEY);
 Parse.serverURL = "https://parseapi.back4app.com/";
@@ -50,6 +49,7 @@ async function updateData(
       console.log("Error: " + error.message);
       emailTrigger(true);
     });
+  return 0;
 }
 
 async function main() {
@@ -142,9 +142,8 @@ async function main() {
 
 //? Schedule tasks to be run on the server
 console.log("COVID19 data scraping has started...");
-cron.schedule("* * * *", function () {
-  console.log("Running this task every 1 hour");
-  main();
-});
+
+console.log("Running this task every 1 hour");
+main();
 
 //main();
