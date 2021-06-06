@@ -141,8 +141,8 @@ async function main() {
 }
 
 //? Schedule tasks to be run on the server
-cron.schedule("* * * * *", function () {
-  console.log("Running a task every minute");
+cron.schedule("*/2 * * *", function () {
+  console.log("Running this task every two hours");
   main();
 });
 
