@@ -7,12 +7,6 @@ const cron = require("node-cron");
 Parse.initialize(process.env.APP_ID, process.env.JS_KEY);
 Parse.serverURL = "https://parseapi.back4app.com/";
 
-//? Schedule tasks to be run on the server
-// cron.schedule("* * * * *", function () {
-//   console.log("running a task every minute");
-//
-// });
-
 async function updateData(
   scrapeDate,
   scrapeTime,
@@ -146,4 +140,10 @@ async function main() {
   );
 }
 
-main();
+//? Schedule tasks to be run on the server
+cron.schedule("* * * * *", function () {
+  console.log("Running a task every minute");
+  main();
+});
+
+//main();
