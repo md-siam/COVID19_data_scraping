@@ -139,11 +139,6 @@ async function main() {
     }
   );
 }
-
-//? Schedule tasks to be run on the server
 console.log("COVID19 data scraping has started...");
-
 console.log("Running this task every 1 hour");
 main();
-
-//main();
