@@ -1,13 +1,43 @@
 const { emailTrigger } = require("./emailtrigger.js");
+const Parse = require("parse/node");
 const request = require("request");
 const cheerio = require("cheerio");
 const cron = require("node-cron");
+
+Parse.initialize(process.env.APP_ID, process.env.JS_KEY);
+Parse.serverURL = "https://parseapi.back4app.com/";
 
 //? Schedule tasks to be run on the server
 // cron.schedule("* * * * *", function () {
 //   console.log("running a task every minute");
 //
 // });
+
+async function updateData(
+  scrapeDate,
+  scrapeTime,
+  scrapLabtest,
+  scrapConfirmed,
+  scrapIsolation,
+  scrapRecovered,
+  scrapDeath
+) {
+  let COVID19 = Parse.Object.extend("COVID19");
+  let covid19Query = new Parse.Query(COVID19);
+
+  let result = await covid19Query.get(process.env.OBJECT_ID);
+
+  //update data
+  result.set("upDate", scrapeDate);
+  result.set("upTime", scrapeTime);
+  result.set("labTest", scrapLabtest);
+  result.set("confirmed", scrapConfirmed);
+  result.set("isolation", scrapIsolation);
+  result.set("recovere", scrapRecovered);
+  result.set("death", scrapDeath);
+  result.save();
+  console.log("\nUpdate successful!!");
+}
 
 async function main() {
   await request(
@@ -65,8 +95,19 @@ async function main() {
             const scrapRecovered = parseInt(_scrapRecovered[0], 10);
             const scrapDeath = parseInt(_scrapDeath[0], 10);
 
+            //*Parse Server works
+            updateData(
+              scrapeDate,
+              scrapeTime,
+              scrapLabtest,
+              scrapConfirmed,
+              scrapIsolation,
+              scrapRecovered,
+              scrapDeath
+            );
+
             console.log("\nScrape date: " + scrapeDate);
-            console.log("Scrape time: " + scrapeTime + "\n");
+            console.log("Scrape time: " + scrapeTime);
             console.log("Lab Test: " + scrapLabtest);
             console.log("Confirmed: " + scrapConfirmed);
             console.log("Isolation: " + scrapIsolation);
