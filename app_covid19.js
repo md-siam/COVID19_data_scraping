@@ -6,6 +6,33 @@ const cheerio = require("cheerio");
 Parse.initialize(process.env.APP_ID, process.env.JS_KEY);
 Parse.serverURL = "https://parseapi.back4app.com/";
 
+//?inserting new data into COVID19 class
+function insertData(
+  scrapeDate,
+  scrapeTime,
+  scrapLabtest,
+  scrapConfirmed,
+  scrapIsolation,
+  scrapRecovered,
+  scrapDeath
+) {
+  let COVID19 = Parse.Object.extend("COVID19");
+  let covid19 = new COVID19();
+
+  covid19.set("upDate", scrapeDate);
+  covid19.set("upTime", scrapeTime);
+  covid19.set("labTest", scrapLabtest);
+  covid19.set("confirmed", scrapConfirmed);
+  covid19.set("isolation", scrapIsolation);
+  covid19.set("recovere", scrapRecovered);
+  covid19.set("death", scrapDeath);
+  covid19.save().catch(function (error) {
+    console.log("Insert error: " + error.message);
+    emailTrigger(true);
+  });
+}
+
+//!updateData function
 async function updateData(
   scrapeDate,
   scrapeTime,
@@ -18,38 +45,33 @@ async function updateData(
   let COVID19 = Parse.Object.extend("COVID19");
   let covid19Query = new Parse.Query(COVID19);
 
-  let result = await covid19Query.get(process.env.OBJECT_ID);
-
-  //!updating existing server data
-  result.set("upDate", scrapeDate);
-  result.set("upTime", scrapeTime);
-  result.set("labTest", scrapLabtest);
-  result.set("confirmed", scrapConfirmed);
-  result.set("isolation", scrapIsolation);
-  result.set("recovere", scrapRecovered);
-  result.set("death", scrapDeath);
-  result
-    .save()
-    .then(function (covid19) {
-      console.log(
-        "COVID19 data updated! Date: " +
-          covid19.get("upDate") +
-          " Time: " +
-          covid19.get("upTime") +
-          "\nConfirmed: " +
-          covid19.get("confirmed") +
-          "\nDeath: " +
-          covid19.get("death") +
-          "\nRecovere: " +
-          covid19.get("recovere") +
-          "\n"
-      );
-    })
-    .catch(function (error) {
-      console.log("Error: " + error.message);
+  covid19Query.equalTo("upDate", scrapeDate);
+  let result = await covid19Query.find();
+  if (result == false) {
+    console.log("New Data inserted");
+    insertData(
+      scrapeDate,
+      scrapeTime,
+      scrapLabtest,
+      scrapConfirmed,
+      scrapIsolation,
+      scrapRecovered,
+      scrapDeath
+    );
+  } else {
+    let update = await covid19Query.get(result[0].id);
+    console.log("Old Data updated");
+    update.set("upTime", scrapeTime);
+    update.set("labTest", scrapLabtest);
+    update.set("confirmed", scrapConfirmed);
+    update.set("isolation", scrapIsolation);
+    update.set("recovere", scrapRecovered);
+    update.set("death", scrapDeath);
+    update.save().catch(function (error) {
+      console.log("Update error: " + error.message);
       emailTrigger(true);
     });
-  return 0;
+  }
 }
 
 async function main() {
