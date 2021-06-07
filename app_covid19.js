@@ -24,7 +24,7 @@ function insertData(
   covid19.set("labTest", scrapLabtest);
   covid19.set("confirmed", scrapConfirmed);
   covid19.set("isolation", scrapIsolation);
-  covid19.set("recovere", scrapRecovered);
+  covid19.set("recovered", scrapRecovered);
   covid19.set("death", scrapDeath);
   covid19.save().catch(function (error) {
     console.log("Insert error: " + error.message);
@@ -66,7 +66,7 @@ async function updateData(
     update.set("labTest", scrapLabtest);
     update.set("confirmed", scrapConfirmed);
     update.set("isolation", scrapIsolation);
-    update.set("recovere", scrapRecovered);
+    update.set("recovered", scrapRecovered);
     update.set("death", scrapDeath);
     update.save().catch(function (error) {
       console.log("Update error: " + error.message);

@@ -63,7 +63,7 @@ async function main() {
             console.log("Lab Test: " + scrapLabtest);
             console.log("Confirmed: " + scrapConfirmed);
             console.log("Isolation: " + scrapIsolation);
-            console.log("Recovere: " + scrapRecovered);
+            console.log("Recovered: " + scrapRecovered);
             console.log("Death: " + scrapDeath + "\n");
           });
         } else {
