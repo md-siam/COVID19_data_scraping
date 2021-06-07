@@ -4,7 +4,7 @@ const request = require("request");
 const cheerio = require("cheerio");
 
 Parse.initialize(process.env.APP_ID, process.env.JS_KEY);
-Parse.serverURL = "https://parseapi.back4app.com/";
+Parse.serverURL = process.env.SERVER_URL;
 
 //?inserting new data into COVID19 class
 function insertData(
@@ -48,6 +48,7 @@ async function updateData(
   query.equalTo("upDate", scrapeDate);
 
   let result = await query.find();
+  //*calling function "insertData"
   if (result == false) {
     insertData(
       scrapeDate,
@@ -140,7 +141,6 @@ async function main() {
               scrapRecovered,
               scrapDeath
             );
-
           });
         } else {
           // console.log(
