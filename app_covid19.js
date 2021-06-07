@@ -16,8 +16,8 @@ function insertData(
   scrapRecovered,
   scrapDeath
 ) {
-  let COVID19 = Parse.Object.extend("COVID19");
-  let covid19 = new COVID19();
+  const COVID19 = Parse.Object.extend("COVID19");
+  const covid19 = new COVID19();
   console.log("New data inserted at: " + scrapeTime);
   covid19.set("upDate", scrapeDate);
   covid19.set("upTime", scrapeTime);
@@ -42,12 +42,12 @@ async function updateData(
   scrapRecovered,
   scrapDeath
 ) {
-  let COVID19 = Parse.Object.extend("COVID19");
-  let query = new Parse.Query(COVID19);
+  const COVID19 = Parse.Object.extend("COVID19");
+  const query = new Parse.Query(COVID19);
 
   query.equalTo("upDate", scrapeDate);
 
-  let result = await query.find();
+  const result = await query.find();
   //*calling function "insertData"
   if (result == false) {
     insertData(
@@ -60,7 +60,7 @@ async function updateData(
       scrapDeath
     );
   } else {
-    let update = await query.get(result[0].id);
+    const update = await query.get(result[0].id);
     console.log("Old data updated at: " + scrapeTime);
     update.set("upTime", scrapeTime);
     update.set("labTest", scrapLabtest);
